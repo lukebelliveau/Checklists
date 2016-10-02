@@ -14,21 +14,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="ChecklistItem" id="48z-yb-7dZ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="ChecklistItem" id="48z-yb-7dZ">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="48z-yb-7dZ" id="7LT-HR-gjC">
-                                    <rect key="frame" x="0.0" y="0.0" width="561" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="533" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yKI-pk-6Rx">
-                                            <rect key="frame" x="8" y="11" width="534" height="21"/>
+                                            <rect key="frame" x="46" y="11" width="534" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="☑︎" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNk-bJ-kga">
+                                            <rect key="frame" x="17" y="8" width="21" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="qSj-OG-aIo" kind="presentation" identifier="EditItem" trigger="accessoryAction" id="npH-SO-FG3"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -141,7 +150,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WHE-af-ede" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="893" y="1169"/>
+            <point key="canvasLocation" x="719" y="1383"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="npH-SO-FG3"/>
+    </inferredMetricsTieBreakers>
 </document>
