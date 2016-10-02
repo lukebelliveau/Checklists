@@ -68,11 +68,6 @@ class ChecklistViewController: UITableViewController {
         return cell
     }
     
-    func configureTextForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem){
-        let label = cell.viewWithTag(1000) as! UILabel
-        label.text = item.text
-    }
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if let cell = tableView.cellForRowAtIndexPath(indexPath){
@@ -86,6 +81,18 @@ class ChecklistViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath){
+        items.removeAtIndex(indexPath.row)
+        
+        let indexPaths = [indexPath]
+        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+    }
+    
+    func configureTextForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem){
+        let label = cell.viewWithTag(1000) as! UILabel
+        label.text = item.text
+    }
+    
     func configureCheckmarkForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem) {
         
         if item.checked {
@@ -93,6 +100,19 @@ class ChecklistViewController: UITableViewController {
         } else {
             cell.accessoryType = .None
         }
+    }
+    
+    @IBAction func addItem() {
+        let newRowIndex = items.count
+        
+        let item = ChecklistItem();
+        item.text = "I am a new row"
+        item.checked = false
+        items.append(item)
+        
+        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
     }
 
 }
