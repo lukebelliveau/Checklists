@@ -11,11 +11,13 @@ import UIKit
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     var items: [ChecklistItem]
+    let dataService: DataService;
     
     required init?(coder aDecoder: NSCoder) {
         items = [ChecklistItem]()
+        dataService = DataService();
         super.init(coder: aDecoder)
-        loadChecklistItems();
+        items = dataService.loadChecklistItems();
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
@@ -72,7 +74,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
-        saveChecklistItems();
+        dataService.save(checklistItems: items);
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
@@ -81,7 +83,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
         
-        saveChecklistItems();
+        dataService.save(checklistItems: items);
     }
     
     func configureTextForCell(_ cell: UITableViewCell, withChecklistItem item: ChecklistItem){
@@ -111,7 +113,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
         
-        saveChecklistItems();
+        dataService.save(checklistItems: items);
         
         dismiss(animated: true, completion: nil)
     }
@@ -124,42 +126,11 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             }
         }
         
-        saveChecklistItems();
+        dataService.save(checklistItems: items);
         
         dismiss(animated: true, completion: nil)
     }
     
-    func documentsDirectory() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        return paths[0]
-    }
-    
-    func dataFilePath() -> String {
-        return (documentsDirectory() as NSString).appendingPathComponent("Checklists.plist")
-    }
-    
-    func saveChecklistItems() {
-        let data = NSMutableData();
-        let archiver = NSKeyedArchiver(forWritingWith: data);
-        archiver.encode(items, forKey: "checklistItems");
-        
-        archiver.finishEncoding();
-        data.write(toFile:dataFilePath(), atomically: true);
-        
-    }
-    
-    func loadChecklistItems() {
-        let path = dataFilePath();
-        
-        if FileManager.default.fileExists(atPath: path) {
-            if let data = NSData(contentsOfFile: path) {
-                let unarchiver = NSKeyedUnarchiver(forReadingWith: data as Data);
-                items = unarchiver.decodeObject(forKey: "checklistItems") as! [ChecklistItem];
-                
-                unarchiver.finishDecoding();
-            }
-        }
-    }
 
 }
 

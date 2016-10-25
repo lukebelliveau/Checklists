@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3110D0E1DBEF2C800483516 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3110D0D1DBEF2C800483516 /* DataService.swift */; };
 		A31A79481DA16F71009FC260 /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A79471DA16F71009FC260 /* ItemDetailViewController.swift */; };
 		A3F864641D958482002AA089 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F864631D958482002AA089 /* AppDelegate.swift */; };
 		A3F864661D958482002AA089 /* ChecklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F864651D958482002AA089 /* ChecklistViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A3110D0D1DBEF2C800483516 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		A31A79471DA16F71009FC260 /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		A3F864601D958482002AA089 /* Checklists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Checklists.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3F864631D958482002AA089 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				A3F8646C1D958482002AA089 /* LaunchScreen.storyboard */,
 				A3F8646F1D958482002AA089 /* Info.plist */,
 				A3F864751D95D098002AA089 /* ChecklistItem.swift */,
+				A3110D0D1DBEF2C800483516 /* DataService.swift */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";
@@ -97,7 +100,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Luke;
 				TargetAttributes = {
 					A3F8645F1D958482002AA089 = {
@@ -146,6 +149,7 @@
 				A31A79481DA16F71009FC260 /* ItemDetailViewController.swift in Sources */,
 				A3F864761D95D098002AA089 /* ChecklistItem.swift in Sources */,
 				A3F864641D958482002AA089 /* AppDelegate.swift in Sources */,
+				A3110D0E1DBEF2C800483516 /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +189,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -230,8 +236,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -250,6 +258,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
