@@ -133,7 +133,9 @@
                             <outlet property="delegate" destination="8DI-Yh-hW0" id="gBg-XD-iFj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Checklists" id="7dv-LL-hYU"/>
+                    <navigationItem key="navigationItem" title="Checklists" id="7dv-LL-hYU">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="HsU-d4-yXs"/>
+                    </navigationItem>
                     <connections>
                         <segue destination="RC0-zZ-gkI" kind="show" identifier="ShowChecklist" id="oXR-OW-RKa"/>
                     </connections>
@@ -180,6 +182,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="npH-SO-FG3"/>
+        <segue reference="SoV-1g-CzZ"/>
     </inferredMetricsTieBreakers>
 </document>
