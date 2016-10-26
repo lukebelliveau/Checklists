@@ -41,9 +41,7 @@ class DataService {
                 unarchiver.finishDecoding();
             }
         }
-        
         return items
-   
     }
     
 }
