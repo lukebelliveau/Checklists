@@ -2,13 +2,14 @@ import UIKit
 
 protocol ListEntryDetailViewControllerDelegate: class {
     func ListEntryDetailViewControllerDidCancel(_ controller: ListEntryDetailViewController)
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItem item: ChecklistItem)
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingItem item: ChecklistItem)
+    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItemWithText text: String)
+    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingEntry entry: Entry)
 }
 
 protocol Entry: class {
     func prepare(entryForSavingWithLabel label: String) -> Entry;
     func prepare(entryForEditingWithLabel label: String) -> Entry;
+    var text: String {get set};
 }
 
 class ListEntryDetailViewController: UITableViewController, UITextFieldDelegate {
@@ -16,16 +17,16 @@ class ListEntryDetailViewController: UITableViewController, UITextFieldDelegate 
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     
-    var itemToEdit: ChecklistItem?
+    var entryToEdit: Entry?
     
     weak var delegate: ListEntryDetailViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let item = itemToEdit {
+        if let entry = entryToEdit {
             title = "Edit Item"
-            textField.text = item.text
+            textField.text = entry.text
             doneBarButton.isEnabled = true
         }
     }
@@ -41,16 +42,12 @@ class ListEntryDetailViewController: UITableViewController, UITextFieldDelegate 
     
     @IBAction func done() {
         
-        if let item = itemToEdit {
-            let preparedItem = item.prepare(entryForEditingWithLabel: textField.text!);
+        if let entry = entryToEdit {
+            entry.text = textField.text!;
             
-            delegate?.ListEntryDetailViewController(self, didFinishEditingItem: preparedItem as! ChecklistItem)
+            delegate?.ListEntryDetailViewController(self, didFinishEditingEntry: entry)
         } else {
-            let item = ChecklistItem()
-            item.text = textField.text!
-            item.checked = false
-            
-            delegate?.ListEntryDetailViewController(self, didFinishAddingItem: item)
+            delegate?.ListEntryDetailViewController(self, didFinishAddingItemWithText: textField.text!);
         }
         
     }

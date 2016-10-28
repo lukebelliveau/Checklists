@@ -34,7 +34,7 @@ class ChecklistViewController: UITableViewController, ListEntryDetailViewControl
             controller.delegate = self
             
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-                controller.itemToEdit = items[(indexPath as NSIndexPath).row]
+                controller.entryToEdit = items[(indexPath as NSIndexPath).row]
             }
         }
     }
@@ -106,7 +106,10 @@ class ChecklistViewController: UITableViewController, ListEntryDetailViewControl
         dismiss(animated: true, completion: nil)
     }
     
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItem item: ChecklistItem) {
+    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItemWithText text: String) {
+        let item = ChecklistItem();
+        item.text = text;
+        
         let newRowIndex = items.count
         items.append(item)
         
@@ -119,7 +122,8 @@ class ChecklistViewController: UITableViewController, ListEntryDetailViewControl
         dismiss(animated: true, completion: nil)
     }
     
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingItem item: ChecklistItem) {
+    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingEntry item: Entry) {
+        let item = item as! ChecklistItem;
         if let index = items.index(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
@@ -132,6 +136,5 @@ class ChecklistViewController: UITableViewController, ListEntryDetailViewControl
         dismiss(animated: true, completion: nil)
     }
     
-
 }
 
