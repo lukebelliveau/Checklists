@@ -30,13 +30,4 @@ class ChecklistItem: NSObject, NSCoding, Entry {
         aCoder.encode(text, forKey: "Text");
         aCoder.encode(checked, forKey: "Checked");
     }
-    
-    func prepare(entryForSavingWithLabel label: String) -> Entry {
-        return self;
-    }
-    
-    func prepare(entryForEditingWithLabel label: String) -> Entry {
-        self.text = label;
-        return self;
-    }
 }

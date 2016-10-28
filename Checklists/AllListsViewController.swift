@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController {
+class AllListsViewController: UITableViewController, ListEntryDetailViewControllerDelegate {
     
     var checklists: [Checklist];
 
@@ -22,11 +22,11 @@ class AllListsViewController: UITableViewController {
         super.init(coder: aDecoder);
         
         var list = Checklist();
-        list.name = "Birthdays";
+        list.text = "Birthdays";
         checklists.append(list);
         
         list = Checklist();
-        list.name = "List2";
+        list.text = "List2";
         checklists.append(list);
     }
     
@@ -35,6 +35,10 @@ class AllListsViewController: UITableViewController {
             let controller = segue.destination as! ChecklistViewController
             
             controller.checklist = sender as! Checklist
+        } else if segue.identifier == "EditChecklist" {
+            let navigationController = segue.destination as! UINavigationController;
+            let controller = navigationController.topViewController as! ListEntryDetailViewController;
+            controller.delegate = self;
         }
     }
 
@@ -51,7 +55,7 @@ class AllListsViewController: UITableViewController {
         let cell = cellForTableView(tableView: tableView);
         
         let item = checklists[indexPath.row];
-        cell.textLabel!.text = "List \(item.name)";
+        cell.textLabel!.text = "List \(item.text)";
         cell.accessoryType = .detailDisclosureButton;
         return cell;
     }
@@ -68,8 +72,29 @@ class AllListsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let checklist = checklists[indexPath.row];
-        print ("didSelectRow: " + checklist.name);
+        print ("didSelectRow: " + checklist.text);
         performSegue(withIdentifier: "ShowChecklist", sender: checklist);
     }
-
+    
+    func ListEntryDetailViewControllerDidCancel(_ controller: ListEntryDetailViewController) {
+        dismiss(animated: true, completion: nil);
+    }
+    
+    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItemWithText text: String) {
+        let checklist = Checklist();
+        checklist.text = text;
+        
+        let newRowIndex = checklists.count
+        checklists.append(checklist);
+        
+        let indexPath = IndexPath(row: newRowIndex, section: 0);
+        let indexPaths = [indexPath];
+        tableView.insertRows(at: indexPaths, with: .automatic);
+        
+        dismiss(animated: true, completion: nil);
+    }
+    
+    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingEntry entry: Entry) {
+        
+    }
 }

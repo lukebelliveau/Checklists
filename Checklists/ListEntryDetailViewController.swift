@@ -7,8 +7,6 @@ protocol ListEntryDetailViewControllerDelegate: class {
 }
 
 protocol Entry: class {
-    func prepare(entryForSavingWithLabel label: String) -> Entry;
-    func prepare(entryForEditingWithLabel label: String) -> Entry;
     var text: String {get set};
 }
 

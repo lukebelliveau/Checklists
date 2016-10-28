@@ -8,8 +8,8 @@
 
 import Foundation
 
-class Checklist {
-    var name = "";
+class Checklist: Entry {
+    var text = "";
     var items = [ChecklistItem]();
     
     

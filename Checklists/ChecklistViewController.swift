@@ -41,7 +41,7 @@ class ChecklistViewController: UITableViewController, ListEntryDetailViewControl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = checklist.name;
+        title = checklist.text;
     }
 
     override func didReceiveMemoryWarning() {
