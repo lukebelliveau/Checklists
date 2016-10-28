@@ -54,8 +54,8 @@ class AllListsViewController: UITableViewController, ListEntryDetailViewControll
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = cellForTableView(tableView: tableView);
         
-        let item = checklists[indexPath.row];
-        cell.textLabel!.text = "List \(item.text)";
+        let checklist = checklists[indexPath.row];
+        cell.textLabel!.text = "List \(checklist.text)";
         cell.accessoryType = .detailDisclosureButton;
         return cell;
     }
@@ -70,10 +70,31 @@ class AllListsViewController: UITableViewController, ListEntryDetailViewControll
         }
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
+        checklists.remove(at: (indexPath as NSIndexPath).row)
+        
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+        
+//        dataService.save(checklistItems: items);
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let checklist = checklists[indexPath.row];
         print ("didSelectRow: " + checklist.text);
         performSegue(withIdentifier: "ShowChecklist", sender: checklist);
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let navigationController = storyboard!.instantiateViewController(withIdentifier: "DetailNavigationController") as! UINavigationController
+        let controller = navigationController.topViewController as! ListEntryDetailViewController;
+        
+        controller.delegate = self;
+        
+        let checklist = checklists[indexPath.row];
+        controller.entryToEdit = checklist;
+        
+        present(navigationController, animated: true, completion: nil);
     }
     
     func ListEntryDetailViewControllerDidCancel(_ controller: ListEntryDetailViewController) {
@@ -95,6 +116,20 @@ class AllListsViewController: UITableViewController, ListEntryDetailViewControll
     }
     
     func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingEntry entry: Entry) {
+        let checklist = entry as! Checklist;
+        if let index = checklists.index(of: checklist) {
+            let indexPath = IndexPath(row: index, section: 0);
+            if let cell = tableView.cellForRow(at: indexPath) {
+                configureTextForCell(cell, withEntry: checklist);
+            }
+        }
         
+        dismiss(animated: true, completion: nil);
+    }
+    
+    func configureTextForCell(_ cell: UITableViewCell, withEntry entry: Entry){
+        let label = cell.textLabel
+//        let label = cell.viewWithTag(1000) as! UILabel
+        label?.text = entry.text
     }
 }

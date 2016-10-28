@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Checklist: Entry {
+class Checklist: NSObject, Entry {
     var text = "";
     var items = [ChecklistItem]();
     
