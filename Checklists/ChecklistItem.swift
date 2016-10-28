@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ChecklistItem: NSObject, NSCoding {
+class ChecklistItem: NSObject, NSCoding, Entry {
     var text = ""
     var checked = false
     
@@ -29,5 +29,14 @@ class ChecklistItem: NSObject, NSCoding {
     func encode(with aCoder: NSCoder) {
         aCoder.encode(text, forKey: "Text");
         aCoder.encode(checked, forKey: "Checked");
+    }
+    
+    func prepare(entryForSavingWithLabel label: String) -> Entry {
+        return self;
+    }
+    
+    func prepare(entryForEditingWithLabel label: String) -> Entry {
+        self.text = label;
+        return self;
     }
 }

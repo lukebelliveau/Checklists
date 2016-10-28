@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
+class ChecklistViewController: UITableViewController, ListEntryDetailViewControllerDelegate {
     
     var items: [ChecklistItem]
     let dataService: DataService;
@@ -25,12 +25,12 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         if segue.identifier == "AddItem" {
             let navigationController = segue.destination as! UINavigationController
             
-            let controller = navigationController.topViewController as! ItemDetailViewController
+            let controller = navigationController.topViewController as! ListEntryDetailViewController
             
             controller.delegate = self
         } else if segue.identifier == "EditItem" {
             let navigationController = segue.destination as! UINavigationController
-            let controller = navigationController.topViewController as! ItemDetailViewController
+            let controller = navigationController.topViewController as! ListEntryDetailViewController
             controller.delegate = self
             
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
@@ -102,11 +102,11 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         }
     }
     
-    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
+    func ListEntryDetailViewControllerDidCancel(_ controller: ListEntryDetailViewController) {
         dismiss(animated: true, completion: nil)
     }
     
-    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAddingItem item: ChecklistItem) {
+    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItem item: ChecklistItem) {
         let newRowIndex = items.count
         items.append(item)
         
@@ -119,7 +119,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         dismiss(animated: true, completion: nil)
     }
     
-    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditingItem item: ChecklistItem) {
+    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingItem item: ChecklistItem) {
         if let index = items.index(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
