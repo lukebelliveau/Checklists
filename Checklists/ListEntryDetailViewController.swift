@@ -1,16 +1,16 @@
 import UIKit
 
 protocol DetailViewControllerDelegate: class {
-    func ListEntryDetailViewControllerDidCancel(_ controller: ListEntryDetailViewController)
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItemWithText text: String)
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingEntry entry: Entry)
+    func DetailViewControllerDidCancel(_ controller: DetailViewController)
+    func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String)
+    func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry)
 }
 
 protocol Entry: class {
     var text: String {get set};
 }
 
-class ListEntryDetailViewController: UITableViewController, UITextFieldDelegate {
+class DetailViewController: UITableViewController, UITextFieldDelegate {
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
@@ -35,7 +35,7 @@ class ListEntryDetailViewController: UITableViewController, UITextFieldDelegate 
     }
     
     @IBAction func cancel() {
-        delegate?.ListEntryDetailViewControllerDidCancel(self)
+        delegate?.DetailViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
@@ -43,9 +43,9 @@ class ListEntryDetailViewController: UITableViewController, UITextFieldDelegate 
         if let entry = entryToEdit {
             entry.text = textField.text!;
             
-            delegate?.ListEntryDetailViewController(self, didFinishEditingEntry: entry)
+            delegate?.DetailViewController(self, didFinishEditingEntry: entry)
         } else {
-            delegate?.ListEntryDetailViewController(self, didFinishAddingItemWithText: textField.text!);
+            delegate?.DetailViewController(self, didFinishAddingItemWithText: textField.text!);
         }
         
     }

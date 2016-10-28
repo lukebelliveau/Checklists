@@ -25,12 +25,12 @@ class ChecklistViewController: UITableViewController, DetailViewControllerDelega
         if segue.identifier == "AddItem" {
             let navigationController = segue.destination as! UINavigationController
             
-            let controller = navigationController.topViewController as! ListEntryDetailViewController
+            let controller = navigationController.topViewController as! DetailViewController
             
             controller.delegate = self
         } else if segue.identifier == "EditItem" {
             let navigationController = segue.destination as! UINavigationController
-            let controller = navigationController.topViewController as! ListEntryDetailViewController
+            let controller = navigationController.topViewController as! DetailViewController
             controller.delegate = self
             
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
@@ -102,11 +102,11 @@ class ChecklistViewController: UITableViewController, DetailViewControllerDelega
         }
     }
     
-    func ListEntryDetailViewControllerDidCancel(_ controller: ListEntryDetailViewController) {
+    func DetailViewControllerDidCancel(_ controller: DetailViewController) {
         dismiss(animated: true, completion: nil)
     }
     
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItemWithText text: String) {
+    func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String) {
         let item = ChecklistItem();
         item.text = text;
         
@@ -122,7 +122,7 @@ class ChecklistViewController: UITableViewController, DetailViewControllerDelega
         dismiss(animated: true, completion: nil)
     }
     
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingEntry entry: Entry) {
+    func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
         let item = entry as! ChecklistItem;
         if let index = items.index(of: item) {
             let indexPath = IndexPath(row: index, section: 0)

@@ -37,7 +37,7 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
             controller.checklist = sender as! Checklist
         } else if segue.identifier == "EditChecklist" {
             let navigationController = segue.destination as! UINavigationController;
-            let controller = navigationController.topViewController as! ListEntryDetailViewController;
+            let controller = navigationController.topViewController as! DetailViewController;
             controller.delegate = self;
         }
     }
@@ -87,7 +87,7 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let navigationController = storyboard!.instantiateViewController(withIdentifier: "DetailNavigationController") as! UINavigationController
-        let controller = navigationController.topViewController as! ListEntryDetailViewController;
+        let controller = navigationController.topViewController as! DetailViewController;
         
         controller.delegate = self;
         
@@ -97,11 +97,11 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
         present(navigationController, animated: true, completion: nil);
     }
     
-    func ListEntryDetailViewControllerDidCancel(_ controller: ListEntryDetailViewController) {
+    func DetailViewControllerDidCancel(_ controller: DetailViewController) {
         dismiss(animated: true, completion: nil);
     }
     
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItemWithText text: String) {
+    func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String) {
         let checklist = Checklist();
         checklist.text = text;
         
@@ -115,7 +115,7 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
         dismiss(animated: true, completion: nil);
     }
     
-    func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingEntry entry: Entry) {
+    func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
         let checklist = entry as! Checklist;
         if let index = checklists.index(of: checklist) {
             let indexPath = IndexPath(row: index, section: 0);
