@@ -1,6 +1,6 @@
 import UIKit
 
-protocol ListEntryDetailViewControllerDelegate: class {
+protocol DetailViewControllerDelegate: class {
     func ListEntryDetailViewControllerDidCancel(_ controller: ListEntryDetailViewController)
     func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishAddingItemWithText text: String)
     func ListEntryDetailViewController(_ controller: ListEntryDetailViewController, didFinishEditingEntry entry: Entry)
@@ -17,7 +17,7 @@ class ListEntryDetailViewController: UITableViewController, UITextFieldDelegate 
     
     var entryToEdit: Entry?
     
-    weak var delegate: ListEntryDetailViewControllerDelegate?
+    weak var delegate: DetailViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

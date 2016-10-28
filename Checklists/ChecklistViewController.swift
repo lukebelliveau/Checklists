@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController, ListEntryDetailViewControllerDelegate {
+class ChecklistViewController: UITableViewController, DetailViewControllerDelegate {
     
     var items: [ChecklistItem]
     let dataService: DataService;

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, ListEntryDetailViewControllerDelegate {
+class AllListsViewController: UITableViewController, DetailViewControllerDelegate {
     
     var checklists: [Checklist];
 
