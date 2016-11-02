@@ -18,21 +18,10 @@ class AllListsViewController: DetailViewControllerDelegate {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        checklists = [Checklist]();
         dataService = DataService();
-        
-        super.init(coder: aDecoder);
-        
-        var list = Checklist();
-        list.text = "Birthdays";
-        checklists.append(list);
-        
-        list = Checklist();
-        list.text = "List2";
-        checklists.append(list);
-        
         checklists = dataService.loadChecklists()
         
+        super.init(coder: aDecoder);
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -46,11 +35,6 @@ class AllListsViewController: DetailViewControllerDelegate {
             let controller = navigationController.topViewController as! DetailViewController;
             controller.delegate = self;
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

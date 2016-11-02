@@ -10,13 +10,11 @@ import UIKit
 
 class ChecklistViewController: DetailViewControllerDelegate {
     
-    var items: [ChecklistItem]
     let dataService: DataService;
     var checklist: Checklist!;
     var listVC: AllListsViewController!;
     
     required init?(coder aDecoder: NSCoder) {
-        items = [ChecklistItem]()
         dataService = DataService();
         super.init(coder: aDecoder)
     }
@@ -42,15 +40,8 @@ class ChecklistViewController: DetailViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = checklist.text;
-        items = checklist.items;
-//        items = dataService.load(checklist);
-//        items = checklist.items;
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return checklist.items.count

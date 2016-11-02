@@ -18,26 +18,6 @@ class DataService {
     func dataFilePath() -> String {
         return (documentsDirectory() as NSString).appendingPathComponent("Checklists.plist")
     }
-//    
-//    func save(checklistItems items: [ChecklistItem]) {
-//        let data = NSMutableData();
-//        let archiver = NSKeyedArchiver(forWritingWith: data);
-//        archiver.encode(items, forKey: "checklistItems");
-//        
-//        archiver.finishEncoding();
-//        data.write(toFile:dataFilePath(), atomically: true);
-//        
-//    }
-//    
-//    func save(entries: [Entry], withKey key: String) {
-//        let data = NSMutableData();
-//        let archiver = NSKeyedArchiver(forWritingWith: data);
-//        archiver.encode(entries, forKey: key);
-//        
-//        archiver.finishEncoding();
-//        data.write(toFile:dataFilePath(), atomically: true);
-//        
-//    }
     
     func save(_ checklist: Checklist) {
         let data = NSMutableData();
