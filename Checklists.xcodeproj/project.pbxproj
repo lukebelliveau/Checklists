@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A3110D0E1DBEF2C800483516 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3110D0D1DBEF2C800483516 /* DataService.swift */; };
-		A31A79481DA16F71009FC260 /* ListEntryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A79471DA16F71009FC260 /* ListEntryDetailViewController.swift */; };
+		A31A79481DA16F71009FC260 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A79471DA16F71009FC260 /* DetailViewController.swift */; };
 		A33D299E1DC0339200848E31 /* Checklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33D299D1DC0339200848E31 /* Checklist.swift */; };
+		A35BE4E11DC4020000C68E6C /* DetailViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35BE4E01DC4020000C68E6C /* DetailViewControllerDelegate.swift */; };
 		A3A515951DC00C6B0066DB5E /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A515941DC00C6B0066DB5E /* AllListsViewController.swift */; };
 		A3F864641D958482002AA089 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F864631D958482002AA089 /* AppDelegate.swift */; };
 		A3F864661D958482002AA089 /* ChecklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F864651D958482002AA089 /* ChecklistViewController.swift */; };
@@ -21,8 +22,9 @@
 
 /* Begin PBXFileReference section */
 		A3110D0D1DBEF2C800483516 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
-		A31A79471DA16F71009FC260 /* ListEntryDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListEntryDetailViewController.swift; sourceTree = "<group>"; };
+		A31A79471DA16F71009FC260 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		A33D299D1DC0339200848E31 /* Checklist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checklist.swift; sourceTree = "<group>"; };
+		A35BE4E01DC4020000C68E6C /* DetailViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A3A515941DC00C6B0066DB5E /* AllListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
 		A3F864601D958482002AA089 /* Checklists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Checklists.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3F864631D958482002AA089 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +68,7 @@
 			children = (
 				A3F864631D958482002AA089 /* AppDelegate.swift */,
 				A3F864651D958482002AA089 /* ChecklistViewController.swift */,
-				A31A79471DA16F71009FC260 /* ListEntryDetailViewController.swift */,
+				A31A79471DA16F71009FC260 /* DetailViewController.swift */,
 				A3F864671D958482002AA089 /* Main.storyboard */,
 				A3F8646A1D958482002AA089 /* Assets.xcassets */,
 				A3F8646C1D958482002AA089 /* LaunchScreen.storyboard */,
@@ -75,6 +77,7 @@
 				A3110D0D1DBEF2C800483516 /* DataService.swift */,
 				A3A515941DC00C6B0066DB5E /* AllListsViewController.swift */,
 				A33D299D1DC0339200848E31 /* Checklist.swift */,
+				A35BE4E01DC4020000C68E6C /* DetailViewControllerDelegate.swift */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";
@@ -153,7 +156,8 @@
 			files = (
 				A3F864661D958482002AA089 /* ChecklistViewController.swift in Sources */,
 				A3A515951DC00C6B0066DB5E /* AllListsViewController.swift in Sources */,
-				A31A79481DA16F71009FC260 /* ListEntryDetailViewController.swift in Sources */,
+				A35BE4E11DC4020000C68E6C /* DetailViewControllerDelegate.swift in Sources */,
+				A31A79481DA16F71009FC260 /* DetailViewController.swift in Sources */,
 				A3F864761D95D098002AA089 /* ChecklistItem.swift in Sources */,
 				A3F864641D958482002AA089 /* AppDelegate.swift in Sources */,
 				A3110D0E1DBEF2C800483516 /* DataService.swift in Sources */,

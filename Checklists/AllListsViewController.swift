@@ -8,9 +8,10 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, DetailViewControllerDelegate {
+class AllListsViewController: DetailViewControllerDelegate {
     
     var checklists: [Checklist];
+    let dataService: DataService;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +19,7 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
     
     required init?(coder aDecoder: NSCoder) {
         checklists = [Checklist]();
+        dataService = DataService();
         
         super.init(coder: aDecoder);
         
@@ -28,6 +30,9 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
         list = Checklist();
         list.text = "List2";
         checklists.append(list);
+        
+        checklists = dataService.loadChecklists()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -35,6 +40,7 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
             let controller = segue.destination as! ChecklistViewController
             
             controller.checklist = sender as! Checklist
+            controller.listVC = self;
         } else if segue.identifier == "EditChecklist" {
             let navigationController = segue.destination as! UINavigationController;
             let controller = navigationController.topViewController as! DetailViewController;
@@ -97,11 +103,7 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
         present(navigationController, animated: true, completion: nil);
     }
     
-    func DetailViewControllerDidCancel(_ controller: DetailViewController) {
-        dismiss(animated: true, completion: nil);
-    }
-    
-    func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String) {
+    override func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String) {
         let checklist = Checklist();
         checklist.text = text;
         
@@ -115,7 +117,7 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
         dismiss(animated: true, completion: nil);
     }
     
-    func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
+    override func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
         let checklist = entry as! Checklist;
         if let index = checklists.index(of: checklist) {
             let indexPath = IndexPath(row: index, section: 0);
@@ -129,7 +131,10 @@ class AllListsViewController: UITableViewController, DetailViewControllerDelegat
     
     func configureTextForCell(_ cell: UITableViewCell, withEntry entry: Entry){
         let label = cell.textLabel
-//        let label = cell.viewWithTag(1000) as! UILabel
         label?.text = entry.text
+    }
+    
+    func saveChecklists() {
+        dataService.save(checklists);
     }
 }

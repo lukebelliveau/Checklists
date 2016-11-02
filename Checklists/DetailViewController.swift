@@ -1,11 +1,5 @@
 import UIKit
 
-protocol DetailViewControllerDelegate: class {
-    func DetailViewControllerDidCancel(_ controller: DetailViewController)
-    func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String)
-    func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry)
-}
-
 protocol Entry: class {
     var text: String {get set};
 }

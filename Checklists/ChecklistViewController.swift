@@ -8,17 +8,17 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController, DetailViewControllerDelegate {
+class ChecklistViewController: DetailViewControllerDelegate {
     
     var items: [ChecklistItem]
     let dataService: DataService;
     var checklist: Checklist!;
+    var listVC: AllListsViewController!;
     
     required init?(coder aDecoder: NSCoder) {
         items = [ChecklistItem]()
         dataService = DataService();
         super.init(coder: aDecoder)
-        items = dataService.loadChecklistItems();
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
@@ -34,7 +34,7 @@ class ChecklistViewController: UITableViewController, DetailViewControllerDelega
             controller.delegate = self
             
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-                controller.entryToEdit = items[(indexPath as NSIndexPath).row]
+                controller.entryToEdit = checklist.items[(indexPath as NSIndexPath).row]
             }
         }
     }
@@ -42,6 +42,9 @@ class ChecklistViewController: UITableViewController, DetailViewControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         title = checklist.text;
+        items = checklist.items;
+//        items = dataService.load(checklist);
+//        items = checklist.items;
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,13 +53,13 @@ class ChecklistViewController: UITableViewController, DetailViewControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return checklist.items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
         
-        let item = items[(indexPath as NSIndexPath).row]
+        let item = checklist.items[(indexPath as NSIndexPath).row]
         
         configureTextForCell(cell, withChecklistItem: item)
         configureCheckmarkForCell(cell, withChecklistItem: item)
@@ -68,23 +71,23 @@ class ChecklistViewController: UITableViewController, DetailViewControllerDelega
         
         if let cell = tableView.cellForRow(at: indexPath){
             
-            let item = items[(indexPath as NSIndexPath).row]
+            let item = checklist.items[(indexPath as NSIndexPath).row]
             item.toggleChecked()
             
             configureCheckmarkForCell(cell, withChecklistItem: item)
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
-        dataService.save(checklistItems: items);
+        dataService.save(checklist);
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
-        items.remove(at: (indexPath as NSIndexPath).row)
+        checklist.items.remove(at: (indexPath as NSIndexPath).row)
         
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
         
-        dataService.save(checklistItems: items);
+        dataService.save(checklist);
     }
     
     func configureTextForCell(_ cell: UITableViewCell, withChecklistItem item: ChecklistItem){
@@ -102,36 +105,34 @@ class ChecklistViewController: UITableViewController, DetailViewControllerDelega
         }
     }
     
-    func DetailViewControllerDidCancel(_ controller: DetailViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String) {
+    override func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String) {
         let item = ChecklistItem();
         item.text = text;
         
-        let newRowIndex = items.count
-        items.append(item)
+        let newRowIndex = checklist.items.count
+        checklist.items.append(item)
         
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
         
-        dataService.save(checklistItems: items);
+//        dataService.save(checklist);
+        listVC.saveChecklists();
         
         dismiss(animated: true, completion: nil)
     }
     
-    func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
+    override func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
         let item = entry as! ChecklistItem;
-        if let index = items.index(of: item) {
+        if let index = checklist.items.index(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
                 configureTextForCell(cell, withChecklistItem: item)
             }
         }
         
-        dataService.save(checklistItems: items);
+//        dataService.save(checklist);
+        listVC.saveChecklists();
         
         dismiss(animated: true, completion: nil)
     }
