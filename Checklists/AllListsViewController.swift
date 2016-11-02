@@ -82,12 +82,11 @@ class AllListsViewController: DetailViewControllerDelegate {
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
         
-//        dataService.save(checklistItems: items);
+        saveChecklists();
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let checklist = checklists[indexPath.row];
-        print ("didSelectRow: " + checklist.text);
         performSegue(withIdentifier: "ShowChecklist", sender: checklist);
     }
     
@@ -114,6 +113,7 @@ class AllListsViewController: DetailViewControllerDelegate {
         let indexPaths = [indexPath];
         tableView.insertRows(at: indexPaths, with: .automatic);
         
+        saveChecklists();
         dismiss(animated: true, completion: nil);
     }
     
@@ -125,7 +125,7 @@ class AllListsViewController: DetailViewControllerDelegate {
                 configureTextForCell(cell, withEntry: checklist);
             }
         }
-        
+        saveChecklists();
         dismiss(animated: true, completion: nil);
     }
     

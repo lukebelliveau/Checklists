@@ -78,7 +78,7 @@ class ChecklistViewController: DetailViewControllerDelegate {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
-        dataService.save(checklist);
+        listVC.saveChecklists()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
@@ -87,7 +87,7 @@ class ChecklistViewController: DetailViewControllerDelegate {
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
         
-        dataService.save(checklist);
+        listVC.saveChecklists()
     }
     
     func configureTextForCell(_ cell: UITableViewCell, withChecklistItem item: ChecklistItem){
@@ -116,7 +116,6 @@ class ChecklistViewController: DetailViewControllerDelegate {
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
         
-//        dataService.save(checklist);
         listVC.saveChecklists();
         
         dismiss(animated: true, completion: nil)
@@ -131,7 +130,6 @@ class ChecklistViewController: DetailViewControllerDelegate {
             }
         }
         
-//        dataService.save(checklist);
         listVC.saveChecklists();
         
         dismiss(animated: true, completion: nil)
