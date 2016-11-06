@@ -20,19 +20,6 @@ class ChecklistViewController: DetailViewControllerDelegate {
         entryType = ChecklistItem.self
     }
     
-    override func arrayCount() -> Int {
-        return checklist.items.count
-    }
-    
-    override func append(_ entry: Entry) {
-        guard let item = entry as? ChecklistItem else { return }
-        checklist.items.append(item)
-    }
-    
-    override func saveChecklists() {
-        listVC.saveChecklists()
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if segue.identifier == "AddItem" {
             let navigationController = segue.destination as! UINavigationController
@@ -96,29 +83,24 @@ class ChecklistViewController: DetailViewControllerDelegate {
         listVC.saveChecklists()
     }
     
-//    override func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
-//        let item = entry as! ChecklistItem;
-//        if let index = checklist.items.index(of: item) {
-//            let indexPath = IndexPath(row: index, section: 0)
-//            if let cell = tableView.cellForRow(at: indexPath) {
-//                configureTextForCell(cell, withChecklistItem: item)
-//            }
-//        }
-//        
-//        listVC.saveChecklists();
-//        
-//        dismiss(animated: true, completion: nil)
-//    }
+    override func arrayCount() -> Int {
+        return checklist.items.count
+    }
+    
+    override func append(_ entry: Entry) {
+        guard let item = entry as? ChecklistItem else { return }
+        checklist.items.append(item)
+    }
+    
+    override func saveChecklists() {
+        listVC.saveChecklists()
+    }
+    
     
     override func getIndex(of entry: Entry) -> Int? {
         guard let entry = entry as? ChecklistItem else { return nil }
         return checklist.items.index(of: entry)
     }
-    
-//    func configureTextForCell(_ cell: UITableViewCell, withChecklistItem item: ChecklistItem){
-//        let label = cell.viewWithTag(1000) as! UILabel
-//        label.text = item.text
-//    }
     
     override func configureTextForCell(_ cell: UITableViewCell, withEntry entry: Entry){
         let label = cell.viewWithTag(1000) as! UILabel

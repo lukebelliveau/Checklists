@@ -25,15 +25,6 @@ class AllListsViewController: DetailViewControllerDelegate {
         entryType = Checklist.self;
     }
     
-    override func arrayCount() -> Int {
-        return checklists.count;
-    }
-    
-    override func append(_ entry: Entry) {
-        guard let checklist = entry as? Checklist else { return }
-        checklists.append(checklist);
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowChecklist" {
             let controller = segue.destination as! ChecklistViewController
@@ -89,23 +80,6 @@ class AllListsViewController: DetailViewControllerDelegate {
         present(navigationController, animated: true, completion: nil);
     }
     
-    override func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
-        let checklist = entry as! Checklist;
-        if let index = checklists.index(of: checklist) {
-            let indexPath = IndexPath(row: index, section: 0);
-            if let cell = tableView.cellForRow(at: indexPath) {
-                configureTextForCell(cell, withEntry: checklist);
-            }
-        }
-        saveChecklists();
-        dismiss(animated: true, completion: nil);
-    }
-    
-    override func configureTextForCell(_ cell: UITableViewCell, withEntry entry: Entry){
-        let label = cell.textLabel
-        label?.text = entry.text
-    }
-    
     //because different cell implementation
     func cellForTableView(tableView: UITableView) -> UITableViewCell {
         let cellIdentifier = "Cell";
@@ -117,7 +91,26 @@ class AllListsViewController: DetailViewControllerDelegate {
         }
     }
     
+    override func arrayCount() -> Int {
+        return checklists.count;
+    }
+    
+    override func append(_ entry: Entry) {
+        guard let checklist = entry as? Checklist else { return }
+        checklists.append(checklist);
+    }
+    
     override func saveChecklists() {
         dataService.save(checklists);
+    }
+    
+    override func getIndex(of entry: Entry) -> Int? {
+        guard let entry = entry as? Checklist else { return nil }
+        return checklists.index(of: entry)
+    }
+    
+    override func configureTextForCell(_ cell: UITableViewCell, withEntry entry: Entry){
+        let label = cell.textLabel
+        label?.text = entry.text
     }
 }
