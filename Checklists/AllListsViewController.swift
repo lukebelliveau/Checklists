@@ -20,8 +20,18 @@ class AllListsViewController: DetailViewControllerDelegate {
     required init?(coder aDecoder: NSCoder) {
         dataService = DataService();
         checklists = dataService.loadChecklists()
-        
+    
         super.init(coder: aDecoder);
+        entryType = Checklist.self;
+    }
+    
+    override func arrayCount() -> Int {
+        return checklists.count;
+    }
+    
+    override func append(_ entry: Entry) {
+        guard let checklist = entry as? Checklist else { return }
+        checklists.append(checklist);
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -41,23 +51,19 @@ class AllListsViewController: DetailViewControllerDelegate {
         return checklists.count
     }
 
+    //different because different cell implementations
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = cellForTableView(tableView: tableView);
         
         let checklist = checklists[indexPath.row];
-        cell.textLabel!.text = "List \(checklist.text)";
+        cell.textLabel!.text = checklist.text;
         cell.accessoryType = .detailDisclosureButton;
         return cell;
     }
     
-    func cellForTableView(tableView: UITableView) -> UITableViewCell {
-        let cellIdentifier = "Cell";
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
-            return cell;
-        } else {
-            return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier);
-        }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let checklist = checklists[indexPath.row];
+        performSegue(withIdentifier: "ShowChecklist", sender: checklist);
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
@@ -69,10 +75,7 @@ class AllListsViewController: DetailViewControllerDelegate {
         saveChecklists();
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let checklist = checklists[indexPath.row];
-        performSegue(withIdentifier: "ShowChecklist", sender: checklist);
-    }
+    
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let navigationController = storyboard!.instantiateViewController(withIdentifier: "DetailNavigationController") as! UINavigationController
@@ -84,21 +87,6 @@ class AllListsViewController: DetailViewControllerDelegate {
         controller.entryToEdit = checklist;
         
         present(navigationController, animated: true, completion: nil);
-    }
-    
-    override func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String) {
-        let checklist = Checklist();
-        checklist.text = text;
-        
-        let newRowIndex = checklists.count
-        checklists.append(checklist);
-        
-        let indexPath = IndexPath(row: newRowIndex, section: 0);
-        let indexPaths = [indexPath];
-        tableView.insertRows(at: indexPaths, with: .automatic);
-        
-        saveChecklists();
-        dismiss(animated: true, completion: nil);
     }
     
     override func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
@@ -113,12 +101,23 @@ class AllListsViewController: DetailViewControllerDelegate {
         dismiss(animated: true, completion: nil);
     }
     
-    func configureTextForCell(_ cell: UITableViewCell, withEntry entry: Entry){
+    override func configureTextForCell(_ cell: UITableViewCell, withEntry entry: Entry){
         let label = cell.textLabel
         label?.text = entry.text
     }
     
-    func saveChecklists() {
+    //because different cell implementation
+    func cellForTableView(tableView: UITableView) -> UITableViewCell {
+        let cellIdentifier = "Cell";
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
+            return cell;
+        } else {
+            return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier);
+        }
+    }
+    
+    override func saveChecklists() {
         dataService.save(checklists);
     }
 }

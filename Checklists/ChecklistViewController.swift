@@ -17,6 +17,20 @@ class ChecklistViewController: DetailViewControllerDelegate {
     required init?(coder aDecoder: NSCoder) {
         dataService = DataService();
         super.init(coder: aDecoder)
+        entryType = ChecklistItem.self
+    }
+    
+    override func arrayCount() -> Int {
+        return checklist.items.count
+    }
+    
+    override func append(_ entry: Entry) {
+        guard let item = entry as? ChecklistItem else { return }
+        checklist.items.append(item)
+    }
+    
+    override func saveChecklists() {
+        listVC.saveChecklists()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
@@ -47,12 +61,13 @@ class ChecklistViewController: DetailViewControllerDelegate {
         return checklist.items.count
     }
     
+    //different because different cell implementations
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
         
         let item = checklist.items[(indexPath as NSIndexPath).row]
         
-        configureTextForCell(cell, withChecklistItem: item)
+        configureTextForCell(cell, withEntry: item)
         configureCheckmarkForCell(cell, withChecklistItem: item)
         
         return cell
@@ -81,9 +96,33 @@ class ChecklistViewController: DetailViewControllerDelegate {
         listVC.saveChecklists()
     }
     
-    func configureTextForCell(_ cell: UITableViewCell, withChecklistItem item: ChecklistItem){
+//    override func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
+//        let item = entry as! ChecklistItem;
+//        if let index = checklist.items.index(of: item) {
+//            let indexPath = IndexPath(row: index, section: 0)
+//            if let cell = tableView.cellForRow(at: indexPath) {
+//                configureTextForCell(cell, withChecklistItem: item)
+//            }
+//        }
+//        
+//        listVC.saveChecklists();
+//        
+//        dismiss(animated: true, completion: nil)
+//    }
+    
+    override func getIndex(of entry: Entry) -> Int? {
+        guard let entry = entry as? ChecklistItem else { return nil }
+        return checklist.items.index(of: entry)
+    }
+    
+//    func configureTextForCell(_ cell: UITableViewCell, withChecklistItem item: ChecklistItem){
+//        let label = cell.viewWithTag(1000) as! UILabel
+//        label.text = item.text
+//    }
+    
+    override func configureTextForCell(_ cell: UITableViewCell, withEntry entry: Entry){
         let label = cell.viewWithTag(1000) as! UILabel
-        label.text = item.text
+        label.text = entry.text
     }
     
     func configureCheckmarkForCell(_ cell: UITableViewCell, withChecklistItem item: ChecklistItem) {
@@ -94,36 +133,6 @@ class ChecklistViewController: DetailViewControllerDelegate {
         } else {
             label.text = ""
         }
-    }
-    
-    override func DetailViewController(_ controller: DetailViewController, didFinishAddingItemWithText text: String) {
-        let item = ChecklistItem();
-        item.text = text;
-        
-        let newRowIndex = checklist.items.count
-        checklist.items.append(item)
-        
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRows(at: indexPaths, with: .automatic)
-        
-        listVC.saveChecklists();
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
-    override func DetailViewController(_ controller: DetailViewController, didFinishEditingEntry entry: Entry) {
-        let item = entry as! ChecklistItem;
-        if let index = checklist.items.index(of: item) {
-            let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath) {
-                configureTextForCell(cell, withChecklistItem: item)
-            }
-        }
-        
-        listVC.saveChecklists();
-        
-        dismiss(animated: true, completion: nil)
     }
     
 }
